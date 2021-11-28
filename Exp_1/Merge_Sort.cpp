@@ -11,38 +11,7 @@ void printer(VI vect){
 		cout << vect[i] << " ";
 }
 
-void merge(VI vect, int  left, int  mid, int  right){
-    int l = 0 ,r = 0,m = 0;
-    VI L_vect ,R_vect ;
-     for(int i =0;i<mid;i++)
-         L_vect.pb(vect[left+i]);
-     for(int i=mid;i<right;i++)
-     R_vect.pb(vect[mid+i]);
-    while (l < L_vect.size() && r < R_vect.size() ){
-        if(L_vect[l] < R_vect[r]){
-            vect[m] = L_vect[l];
-            ++l;
-        }else{
-            vect[m] = R_vect[r];
-            ++r;
-        }
-        ++m;
-    }
-
-    while(l < L_vect.size()){
-        vect[m] = L_vect[l];
-            ++l;
-            ++m;
-    }
-    while(r < R_vect.size()){
-         vect[m] = R_vect[r];
-            ++r;
-            ++m;
-    }
-    printer(vect);
-}
-
-VI mergeSort(VI vect){
+VI mergeSort(VI &vect){
     if(vect.size() < 2)
     return vect;
     int mid = vect.size()/2;
@@ -107,20 +76,20 @@ int main(){
     if(n<10000){
         n += 10000;
     }
-    cout<<"For n = "<<n<<", the time for the following arrays is:"<<endl;
+    cout<<"For n = "<<n<<", in Merge Sort the time for the following arrays is:"<<endl;
     VI vect = rand_VI(n);
     clock_t time_taken = clock();
-    vect = mergeSort(vect);
+    mergeSort(vect);
     time_taken = clock() - time_taken;
     cout<<"For Random array sorting : "<<(float)time_taken/CLOCKS_PER_SEC<<endl;
     vect = asc_VI(n);
     time_taken = clock();
-    vect = mergeSort(vect);
+    mergeSort(vect);
     time_taken = clock() - time_taken;
     cout<<"For ascending sorted array sorting : "<<(float)time_taken/CLOCKS_PER_SEC<<endl;
     vect = dec_VI(n);
     time_taken = clock();
-    vect = mergeSort(vect);
+    mergeSort(vect);
     time_taken = clock() - time_taken;
     cout<<"For descending sorted array sorting : "<<(float)time_taken/CLOCKS_PER_SEC<<endl;
 	return 0;
