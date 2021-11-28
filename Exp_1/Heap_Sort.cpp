@@ -3,7 +3,7 @@
 using namespace std;
 
 #define pb push_back
-#define limit 100000000 // 1e8
+#define limit 10000
 
 typedef vector<int> VI;
 
@@ -12,17 +12,32 @@ void printer(VI vect){
 		cout << vect[i] << " ";
 }
 
-void shellSort(VI &vect) {
-  for (int interval = vect.size() / 2; interval > 0; interval /= 2) {
-    for (int i = interval; i < vect.size(); i += 1) {
-      int temp = vect[i];
-      int j;
-      for (j = i; j >= interval && vect[j - interval] > temp; j -= interval) {
-        vect[j] = vect[j - interval];
-      }
-      vect[j] = temp;
-    }
-  }
+void heapify(VI vect, int n, int i){
+	int largest = i; 
+	int l = 2 * i + 1; 
+	int r = 2 * i + 2; 
+
+	if (l < n && vect[l] > vect[largest])
+		largest = l;
+
+	if (r < n && vect[r] > vect[largest])
+		largest = r;
+
+	if (largest != i) {
+		swap(vect[i], vect[largest]);
+
+		heapify(vect, n, largest);
+	}
+}
+
+void heapSort(VI &vect, int n){
+	for (int i = n / 2 - 1; i >= 0; i--)
+		heapify(vect, n, i);
+
+	for (int i = n - 1; i > 0; i--) {
+		swap(vect[0], vect[i]);
+		heapify(vect, i, 0);
+	}
 }
 
 VI rand_VI(int n){
@@ -51,24 +66,25 @@ VI dec_VI(int n){
 int main(){
     srand(time(0));
     int n = rand()%limit;
-    if(n<10000000){ // 1e7
-        n += 10000000;
+    if(n<1000){
+        n += 1000;
     }
-    cout<<"For n = "<<n<<", in Shell Sort the time for the following arrays is:"<<endl;
+    cout<<"For n = "<<n<<", in Heap Sort the time for the following arrays is:"<<endl;
     VI vect = rand_VI(n);
     clock_t time_taken = clock();
-    shellSort(vect);
+    heapSort(vect,vect.size());
     time_taken = clock() - time_taken;
     cout<<"For Random array sorting : "<<(float)time_taken/CLOCKS_PER_SEC<<endl;
     vect = asc_VI(n);
     time_taken = clock();
-    shellSort(vect);
+    heapSort(vect,vect.size());
     time_taken = clock() - time_taken;
     cout<<"For ascending sorted array sorting : "<<(float)time_taken/CLOCKS_PER_SEC<<endl;
     vect = dec_VI(n);
     time_taken = clock();
-    shellSort(vect);
+    heapSort(vect,vect.size());
     time_taken = clock() - time_taken;
     cout<<"For descending sorted array sorting : "<<(float)time_taken/CLOCKS_PER_SEC<<endl;
 	return 0;
 }
+
