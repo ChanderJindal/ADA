@@ -63,7 +63,6 @@ int main(){
     bubbleSort(vect);
     time_taken = clock() - time_taken;
     cout<<"For descending sorted array sorting : "<<(float)time_taken/CLOCKS_PER_SEC<<endl;
-    printer(vect);
 	return 0;
 }
 

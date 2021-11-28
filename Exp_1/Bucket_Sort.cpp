@@ -3,7 +3,7 @@
 using namespace std;
 
 #define pb push_back
-#define limit1 10000
+#define limit1 100000
 #define limit2 1000000
 
 typedef vector<int> VI;
@@ -54,8 +54,8 @@ VI dec_VI(int n){
 int main(){
     srand(time(0));
     int n = rand()%limit2;
-    if(n<100000){
-        n += 100000;
+    if(n<limit1){
+        n += limit1;
     }
     cout<<"For n = "<<n<<", in Bucket Sort the time for the following arrays is:"<<endl;
     VI vect = rand_VI(n);
